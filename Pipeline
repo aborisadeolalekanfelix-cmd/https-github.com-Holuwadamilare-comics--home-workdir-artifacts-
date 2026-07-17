@@ -1,0 +1,6 @@
+graph TD
+    A[Start Workflow] --> B[Submit to Kling AI]
+    B --> C[Poll until video ready]
+    C --> D[Notify Webhook]
+    D --> E[Auto-post to TikTok]
+    E --> F[Notify Webhook: tiktok_posted]

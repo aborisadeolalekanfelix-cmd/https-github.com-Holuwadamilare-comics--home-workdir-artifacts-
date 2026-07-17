@@ -1,0 +1,22 @@
+# # Create a folder
+$ mkdir actions-runner && cd actions-runnerCopied!# Download the latest runner package
+$ curl -o actions-runner-linux-x64-2.335.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.335.1/actions-runner-linux-x64-2.335.1.tar.gzCopied! # Optional: Validate the hash
+$ echo "4ef2f25285f0ae4477f1fe1e346db76d2f3ebf03824e2ddd1973a2819bf6c8cf  actions-runner-linux-x64-2.335.1.tar.gz" | shasum -a 256 -cCopied! # Extract the installer
+$ tar xzf ./actions-runner-linux-x64-2.335.1.tar.gzCopied! 
+Configure
+# Create the runner and start the configuration experience
+$ ./config.sh --url https://github.com/Holuwadamilare-comics/-home-workdir-artifacts- --token CHVZSKKP2JFK6IDU7XC2NPLKLKLO4Copied! # Last step, run it!
+$ ./run.sh
+Using your self-hosted runner
+# Use this YAML in your workflow file for each job
+runs-on: self-hostedTo get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  - package-ecosystem: "" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"

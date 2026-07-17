@@ -1,0 +1,5 @@
+mkdir -p .github/workflows
+cp /home/workdir/artifacts/.github/workflows/trigger-abyss-workflow.yml .github/workflows/
+git add .github/workflows/
+git commit -m "Add Abyss Masterpiece workflow trigger"
+git push

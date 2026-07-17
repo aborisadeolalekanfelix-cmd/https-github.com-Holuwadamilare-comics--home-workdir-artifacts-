@@ -1,0 +1,121 @@
+HMAC Algorithm Security Exploration
+What is HMAC?
+HMAC (Hash-based Message Authentication Code) is a mechanism for calculating a message authentication code using a cryptographic hash function combined with a secret key.
+It is defined as:
+\[ \text{HMAC}(K, m) = H((K' \oplus \text{opad}) \parallel H((K' \oplus \text{ipad}) \parallel m)) \]
+
+Where:
+\( H \) = cryptographic hash function (e.g., SHA-256)
+\( K \) = secret key
+\( m \) = message
+\( \oplus \) = XOR operation
+\( \parallel \) = concatenation
+Security Properties of HMAC
+HMAC is considered very secure when implemented correctly. Its main strengths are:
+Property
+Description
+Strength
+Integrity
+Detects any modification to the message
+Strong
+Authentication
+Proves the message came from someone who knows the secret key
+Strong
+Resistance to Length Extension
+Unlike plain hashes (e.g., SHA-256 alone), HMAC is resistant
+Strong
+Key Recovery Resistance
+Even if an attacker sees many HMACs, recovering the key is very hard
+Strong
+Collision Resistance
+Inherits the collision resistance of the underlying hash function
+Strong
+Why HMAC-SHA256 is the Standard for Webhooks
+Most webhook providers (GitHub, Stripe, Slack, etc.) use HMAC-SHA256 for these reasons:
+SHA-256 is still considered cryptographically secure (as of 2026)
+Good balance between security and performance
+Widely supported across languages and platforms
+Resistant to known attacks on older hash functions (MD5, SHA-1)
+Recommendation:
+HMAC-SHA256 is currently the best default choice for webhook signatures.
+Security Best Practices
+Practice
+Status
+Recommendation
+Use constant-time comparison
+✅ Critical
+Always use hmac.compare_digest()
+Hash the raw body
+✅ Critical
+Never parse JSON before verifying
+Include timestamp for replay protection
+✅ Recommended
+Add X-Timestamp header
+Use sufficiently long secret
+✅ Recommended
+Minimum 32 bytes (256 bits)
+Rotate secrets periodically
+✅ Good
+Especially in production
+Support signature versioning
+✅ Good
+Use X-Signature-Version: v1
+Never log the secret or raw signatures
+✅ Critical
+Avoid leaking secrets in logs
+Common Pitfalls (and How to Avoid Them)
+Pitfall
+Risk
+Solution
+Using == instead of compare_digest
+Timing attack
+Always use hmac.compare_digest()
+Hashing JSON instead of raw bytes
+Signature bypass
+Hash the exact raw request body
+Not checking algorithm prefix
+Algorithm confusion attacks
+Enforce sha256= prefix
+Long-lived secrets
+Key compromise over time
+Rotate secrets regularly
+No timestamp / replay protection
+Replay attacks
+When HMAC Might Not Be Enough
+While HMAC-SHA256 is excellent for most webhook use cases, consider stronger alternatives in these scenarios:
+Scenario
+Better Alternative
+Why
+High-security financial systems
+Ed25519 or ECDSA signatures
+Asymmetric, better key management
+Need non-repudiation
+Asymmetric signatures
+Proves who signed it
+Very long-term security
+HMAC-SHA-512 or BLAKE3
+Larger output / newer algorithms
+Multiple verifiers
+Asymmetric signatures
+Only the signer needs the private key
+Current Recommendation (2026)
+Use Case
+Recommended Algorithm
+Notes
+Webhooks (most common)
+HMAC-SHA256
+Best balance
+High security / long term
+HMAC-SHA512
+Slightly stronger
+Maximum security
+Ed25519 signatures
+Asymmetric
+Modern high-performance
+BLAKE3 (HMAC mode)
+Very fast + secure
+Summary
+HMAC-SHA256 is still secure and widely recommended for webhook signatures.
+The biggest risks usually come from implementation mistakes, not the algorithm itself.
+Always use constant-time comparison and verify the raw body.
+Adding a timestamp significantly improves security against replay attacks.
