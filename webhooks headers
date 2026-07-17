@@ -1,0 +1,3 @@
+Content-Type: application/json
+X-Hub-Signature-256: sha256=<computed-signature>
+X-Timestamp: 1721030400          # Unix timestamp (recommended)

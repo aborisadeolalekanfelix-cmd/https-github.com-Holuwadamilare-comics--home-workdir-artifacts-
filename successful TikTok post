@@ -1,0 +1,7 @@
+{
+  "event": "tiktok_posted",
+  "episode": 3,
+  "title": "The Dragon’s Pact",
+  "video_url": "https://example-cdn.com/abyss-episode-3-dragon-pact.mp4",
+  "tiktok_publish_id": "1234567890"
+}

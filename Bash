@@ -1,0 +1,9 @@
+# 1. Copy environment file
+cp .env.example .env
+# Edit .env and set a strong WEBHOOK_SECRET
+
+# 2. Start everything with one command
+docker compose up -d
+
+# 3. Your webhook is now live with proper TLS + OCSP stapling
+#    (Caddy handles certificates and OCSP automatically)
